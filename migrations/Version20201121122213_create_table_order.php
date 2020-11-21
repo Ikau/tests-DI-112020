@@ -22,9 +22,8 @@ final class Version20201121122213CreateTableOrder extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(
             'CREATE TABLE `order` (
-                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                purchase_identifier VARCHAR(255) NOT NULL PRIMARY KEY ,
                 customer_id INTEGER NOT NULL,
-                purchase_identifier VARCHAR(255) NOT NULL,
                 product_id INTEGER NOT NULL,
                 quantity INTEGER NOT NULL,
                 price DOUBLE PRECISION NOT NULL,
