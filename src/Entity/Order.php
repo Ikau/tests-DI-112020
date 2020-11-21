@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\PurchaseRepository;
+use App\Repository\OrderRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=PurchaseRepository::class)
+ * @ORM\Entity(repositoryClass=OrderRepository::class)
  */
-class Purchase
+class Order
 {
     /**
      * @ORM\Id
@@ -25,7 +25,7 @@ class Purchase
     private $purchase_identifier;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="purchases")
+     * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="orders")
      * @ORM\JoinColumn(nullable=false)
      * @var Customer
      */
