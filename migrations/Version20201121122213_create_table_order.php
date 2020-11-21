@@ -21,7 +21,7 @@ final class Version20201121122213CreateTableOrder extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(
-            'CREATE TABLE order (
+            'CREATE TABLE `order` (
                 id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                 customer_id INTEGER NOT NULL,
                 purchase_identifier VARCHAR(255) NOT NULL,
@@ -32,12 +32,12 @@ final class Version20201121122213CreateTableOrder extends AbstractMigration
                 date DATE NOT NULL
             )'
         );
-        $this->addSql('CREATE INDEX IDX_6117D13B9395C3F3 ON order (customer_id)');
+        $this->addSql('CREATE INDEX IDX_6117D13B9395C3F3 ON `order` (customer_id)');
     }
 
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP TABLE order');
+        $this->addSql('DROP TABLE `order`');
     }
 }
