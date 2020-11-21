@@ -22,7 +22,7 @@ final class Version20201121102959CreateTableCustomer extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(
             'CREATE TABLE customer (
-            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+            id INTEGER PRIMARY KEY NOT NULL,
             title SMALLINT DEFAULT NULL,
             lastname VARCHAR(255) DEFAULT NULL,
             firstname VARCHAR(255) DEFAULT NULL,
