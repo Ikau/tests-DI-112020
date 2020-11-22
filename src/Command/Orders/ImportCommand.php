@@ -151,8 +151,7 @@ class ImportCommand extends Command
                 // Insert new customer if not a duplicate
                 $customerId = (int) $data[0];
                 if ($this->customerExists($customerId)) {
-                    $output->writeln(
-                        "<comment> Line {$lineNumber} was not imported "
+                    $output->writeln("<comment> Line {$lineNumber} was not imported "
                         . 'because a customer with the same id already exists</comment>'
                     );
                 } else {
@@ -203,13 +202,11 @@ class ImportCommand extends Command
                 $customerId = (int)$data[1];
 
                 if ($this->orderExists($orderId)) {
-                    $output->writeln(
-                        "<comment> Line {$lineNumber} was not imported "
+                    $output->writeln("<comment> Line {$lineNumber} was not imported "
                         . 'because an order with the same identifier already exists.'
                     );
                 } else if (!$this->customerExists($customerId)) {
-                    $output->writeln(
-                        "<comment> Line {$lineNumber} was not imported "
+                    $output->writeln("<comment> Line {$lineNumber} was not imported "
                         . 'because the customer was not found.'
                     );
                 } else {
@@ -256,7 +253,7 @@ class ImportCommand extends Command
 
         // Persisting the entity
         $customer = new Customer();
-        $customer->setId($customerInfo[0])
+        $customer->setId((int)$customerInfo[0])
             ->setTitle($customerInfo[1])
             ->setLastname($customerInfo[2])
             ->setFirstname($customerInfo[3])
