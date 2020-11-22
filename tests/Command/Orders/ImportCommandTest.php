@@ -112,14 +112,14 @@ class ImportCommandTest extends KernelTestCase
     {
         $numberLines = 1;
         $expectedCustomerId = $this->faker->numberBetween(2, 100);
-        $expectedCustomerGender = $this->faker->numberBetween(1, 2);
+        $expectedCustomerTitle = $this->faker->numberBetween(1, 2);
 
         $customersCsv = $this->getRandomCsvFile();
         $customersData = $this->getFakeCustomerData($numberLines);
         $customersCsv->setContent(
             $this->formatArrayToParsableData($customersData)
             // Adding a customer with NULL data
-            . "{$expectedCustomerId};{$expectedCustomerGender};\n"
+            . "{$expectedCustomerId};{$expectedCustomerTitle};\n"
         );
 
         $ordersCsv = $this->getRandomCsvFile();
@@ -136,7 +136,7 @@ class ImportCommandTest extends KernelTestCase
         $customer = $this->em->getRepository(Customer::class)
             ->findOneBy([
                 'id' => (int)$expectedCustomerId,
-                'title' => $expectedCustomerGender
+                'title' => $expectedCustomerTitle
             ]);
         $this->assertNotNull($customer);
     }
