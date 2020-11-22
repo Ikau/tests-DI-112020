@@ -20,6 +20,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ImportCommand extends Command
 {
+    const RETURN_STATUS_OK = 0;
+
     protected static $defaultName = 'ugo:orders:import';
 
     /**
@@ -98,6 +100,7 @@ class ImportCommand extends Command
         }
 
         $output->writeln('<info>Import ended successfully!</info>');
+        return self::RETURN_STATUS_OK;
     }
 
     /**
