@@ -195,4 +195,20 @@ class Customer
             ? 'mme'
             : 'm';
     }
+
+    /**
+     * @return array Associative array as [column_name => column_value, ...]
+     */
+    public function toAssociativeArray(): array
+    {
+        return [
+            Customer::COLUMN_NAME_ID => $this->getId(),
+            Customer::COLUMN_NAME_TITLE => $this->getTitleName(),
+            Customer::COLUMN_NAME_LAST_NAME => $this->getLastname() ?? '',
+            Customer::COLUMN_NAME_FIRST_NAME => $this->getFirstname() ?? '',
+            Customer::COLUMN_NAME_POSTAL_CODE => $this->getPostalCode() ?? '',
+            Customer::COLUMN_NAME_CITY => $this->getCity() ?? '',
+            Customer::COLUMN_NAME_EMAIL => $this->getEmail() ?? ''
+        ];
+    }
 }
