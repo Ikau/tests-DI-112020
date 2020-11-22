@@ -12,6 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Customer
 {
+    const COLUMN_NAME_CITY = 'city';
+    const COLUMN_NAME_EMAIL = 'email';
+    const COLUMN_NAME_FIRST_NAME = 'firstname';
+    const COLUMN_NAME_ID = 'id';
+    const COLUMN_NAME_LAST_NAME = 'lastname';
+    const COLUMN_NAME_POSTAL_CODE = 'postal_code';
+    const COLUMN_NAME_TITLE = 'title';
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
