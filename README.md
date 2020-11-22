@@ -11,4 +11,8 @@ Install frontend dependencies `npm install`
 
 Create database `php bin/console doctrine:database:create`
 
+Create test database `php bin/console --env=test doctrine:database:create`
+
 Apply the migrations `php bin/console doctrine:migrations:migrate`
+
+Apply the migrations for test database `php bin/console --env=test doctrine:migrations:migrate`
