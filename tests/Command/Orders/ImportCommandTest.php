@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Tests\Command\Orders;
+
 use App\Entity\Customer;
 use App\Entity\Order;
 use org\bovigo\vfs\vfsStream;
