@@ -185,4 +185,14 @@ class Customer
 
         return $this;
     }
+
+    /**
+     * @return string Human readable title string.
+     */
+    public function getTitleName(): string
+    {
+        return $this->title === 1
+            ? 'mme'
+            : 'm';
+    }
 }
