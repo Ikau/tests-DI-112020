@@ -54,11 +54,6 @@ class Order
      */
     private $date;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function getPurchaseIdentifier(): ?string
     {
         return $this->purchase_identifier;
