@@ -159,7 +159,7 @@ class Customer implements \EntitySerializationInterface
     /**
      * @return Collection|Order[]
      */
-    public function gerOrders(): Collection
+    public function getOrders(): Collection
     {
         return $this->orders;
     }
