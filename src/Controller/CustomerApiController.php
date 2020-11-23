@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Customer;
 use App\Repository\CustomerRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -52,5 +51,19 @@ class CustomerApiController extends AbstractController
         }
 
         return $this->json($orders);
+    }
+
+    /**
+     * @Route("/{id}", name="show", methods={"GET"}, requirements={"id"="\d+"})
+     * @param Customer $customer
+     * @return JsonResponse
+     */
+    public function find(Customer $customer)
+    {
+        if ($customer === null) {
+            return $this->json([]);
+        }
+
+        return $this->json($customer->toAssociativeArray());
     }
 }

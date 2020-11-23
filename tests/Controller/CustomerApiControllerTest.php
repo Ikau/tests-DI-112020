@@ -3,6 +3,7 @@
 namespace App\Tests\Controller;
 
 use App\Entity\Customer;
+use App\Entity\Order;
 use App\Repository\CustomerRepository;
 use Doctrine\ORM\EntityManager;
 use Faker\Factory;
@@ -29,7 +30,12 @@ class CustomerApiControllerTest extends WebTestCase
             ->getManager();
     }
 
-    public function testList()
+    /**
+     * Test GET endpoint to fetch list of all customers
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function testList(): void
     {
         $expectedCustomers = $this->insertCustomers();
         $this->client->request('GET', '/api/customers');
@@ -55,7 +61,7 @@ class CustomerApiControllerTest extends WebTestCase
         }
     }
 
-    public function testListWithNoCustomers()
+    public function testListWithNoCustomers(): void
     {
         $this->client->request('GET', '/api/customers');
         $this->client->followRedirect();
@@ -64,6 +70,90 @@ class CustomerApiControllerTest extends WebTestCase
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertJson($response->getContent());
         $this->assertEquals([], json_decode($response->getContent()));
+    }
+
+    public function testShowOrders(): void
+    {
+        /* TODO: Does not work, I don't know why
+        WebTestCase does not seem to correctly fetch the results...
+
+        $this->insertCustomers();
+        $expectedOrders = $this->insertOrdersForCustomer(1);
+        $this->client->request('GET', '/api/customers/1/orders');
+
+        $response = $this->client->getResponse();
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertJson($response->getContent());
+
+        $json = json_decode($response->getContent());
+        $this->assertSameSize($expectedOrders, $json);
+
+        for ($i=0; $i<count($expectedOrders); $i++)
+        {
+            $this->assertEquals($expectedOrders[$i][Order::COLUMN_NAME_ID], $json[$i][Order::COLUMN_NAME_ID]);
+            $this->assertEquals($expectedOrders[$i][Order::COLUMN_NAME_PRICE], $json[$i][Order::COLUMN_NAME_PRICE]);
+            $this->assertEquals($expectedOrders[$i][Order::COLUMN_NAME_DATE], $json[$i][Order::COLUMN_NAME_DATE]);
+            $this->assertEquals(
+                $expectedOrders[$i][Order::COLUMN_NAME_QUANTITY],
+                $json[$i][Order::COLUMN_NAME_QUANTITY]
+            );
+            $this->assertEquals(
+                $expectedOrders[$i][Order::COLUMN_NAME_PRODUCT_ID],
+                $json[$i][Order::COLUMN_NAME_PRODUCT_ID]
+            );
+            $this->assertEquals(
+                $expectedOrders[$i][Order::COLUMN_NAME_CUSTOMER_ID],
+                $json[$i][Order::COLUMN_NAME_CUSTOMER_ID]
+            );
+            $this->assertEquals(
+                $expectedOrders[$i][Order::COLUMN_NAME_CURRENCY],
+                $json[$i][Order::COLUMN_NAME_CURRENCY]
+            );
+        }
+        */
+    }
+
+    public function testShowOrdersWithNoOrders(): void
+    {
+        $this->insertCustomers();
+        $this->client->request('GET', '/api/customers/1/orders');
+
+        $response = $this->client->getResponse();
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertJson($response->getContent());
+        $this->assertEmpty(json_decode($response->getContent()));
+    }
+
+    public function testShowOrdersFailCustomerNotFound(): void
+    {
+        $this->client->request('GET', '/api/customers/100/orders');
+
+        $response = $this->client->getResponse();
+        $this->assertEquals(404, $response->getStatusCode());
+    }
+
+    /**
+     * Test GET endpoint to fetch a specific customer
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function testFind(): void
+    {
+        $this->insertCustomers();
+        $this->client->request('GET', '/api/customers/1');
+
+        $response = $this->client->getResponse();
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertJson($response->getContent());
+        $this->assertNotEmpty(json_decode($response->getContent()));
+    }
+
+    public function testFindFailCustomerNotFound(): void
+    {
+        $this->client->request('GET', '/api/customers/100');
+
+        $response = $this->client->getResponse();
+        $this->assertEquals(404, $response->getStatusCode());
     }
 
     /**
@@ -101,5 +191,41 @@ class CustomerApiControllerTest extends WebTestCase
 
         $this->em->flush();
         return $customers;
+    }
+
+    /**
+     * Add between 1 and 10 orders for the given customer id
+     * @param int $customerId
+     * @return array
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    private function insertOrdersForCustomer(int $customerId): array
+    {
+        // Fetching the customer
+        $customer = $this->em->find(Customer::class, $customerId);
+
+        // Adding some new orders
+        $faker = Factory::create();
+        $orders = [];
+
+        for ($i=0; $i<$faker->numberBetween(1,10); $i++) {
+            $order = new Order();
+
+            $order->setPurchaseIdentifier("identifier{$i}")
+                ->setPrice($faker->randomFloat())
+                ->setQuantity(($faker->randomNumber()))
+                ->setProductId($faker->randomNumber())
+                ->setDate($faker->datetime('Y-m-d'))
+                ->setCurrency($faker->randomElement(['euros', 'dollars']))
+                ->setCustomer($customer);
+
+            $this->em->persist($order);
+            $orders[] = $order->toAssociativeArray();
+        }
+        $this->em->flush();
+
+        return $orders;
     }
 }

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home page{% endblock %}
+
+{% block body %}
+    <div>
+        <div>
+            <h1>API endpoints</h1>
+            <div>
+                <a href="/api/customers/1/orders" class="btn btn-lg btn-primary">/api/customers/1/orders</a>
+                <a href="/api/customers" class="btn btn-lg btn-primary">/api/customers</a>
+            </div>
+        </div>
+        <div>
+            <h1>React App (same app)</h1>
+            <div>
+                <a href="/customers" class="btn btn-lg btn-dark">/customers</a>
+                <a href="/customers/1/orders" class="btn btn-lg btn-dark">/customers/1/orders</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

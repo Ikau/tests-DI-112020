@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Command\Orders;
+
+use Exception;
+
 class ImportCommandException extends Exception
 {
     const ERROR_CODE_FILE_NOT_FOUND_CUSTOMER = 0;
