@@ -29,6 +29,11 @@ class CustomerApiControllerTest extends WebTestCase
             ->getManager();
     }
 
+    /**
+     * Test GET endpoint to fetch list of all customers
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function testList()
     {
         $expectedCustomers = $this->insertCustomers();
@@ -64,6 +69,30 @@ class CustomerApiControllerTest extends WebTestCase
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertJson($response->getContent());
         $this->assertEquals([], json_decode($response->getContent()));
+    }
+
+    /**
+     * Test GET endpoint to fetch a specific customer
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function testFind()
+    {
+        $this->insertCustomers();
+        $this->client->request('GET', '/api/customers/1');
+
+        $response = $this->client->getResponse();
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertJson($response->getContent());
+        $this->assertNotEmpty(json_decode($response->getContent()));
+    }
+
+    public function testFindFailCustomerNotFound()
+    {
+        $this->client->request('GET', '/api/customers/100');
+
+        $response = $this->client->getResponse();
+        $this->assertEquals(404, $response->getStatusCode());
     }
 
     /**
