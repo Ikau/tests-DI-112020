@@ -5,7 +5,6 @@ namespace App\Command\Orders;
 use App\Entity\Customer;
 use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
-use ImportCommandException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
