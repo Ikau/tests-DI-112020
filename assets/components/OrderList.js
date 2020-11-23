@@ -32,16 +32,17 @@ export class OrderList extends React.Component {
     render() {
         return (
             <div>
+                <h1>Order list for customer #{this.state.customerId}</h1>
                 <div>
-                    <input
+                    <a className="btn btn-primary" href="/customers">Back to customer list</a>
+                </div>
+                <div>
+                    <span>Query a specific customer id</span>
+                    <input className="form-control"
                         onChange={(e) => this.changeCustomerId(e)}
                         type="text"
                         placeholder="1234"
                     />
-                </div>
-                <h1>Order list for customer #{this.state.customerId}</h1>
-                <div>
-                    <a href="/customers">Back to customer list</a>
                 </div>
                 <div>
                     <table className="table">
@@ -133,7 +134,7 @@ export class OrderList extends React.Component {
         let sum = 0.0;
         this.state.orderList.forEach((order) => {
            if (order.currency === currency) {
-               sum += order.price;
+               sum += (order.price * order.quantity);
            }
         });
         return sum;
