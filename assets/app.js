@@ -10,5 +10,22 @@ import './styles/app.css';
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 import $ from 'jquery';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-console.log('Hello Webpack Encore! Edit me in assets/app.js');
+// Components
+import CustomerList from "./components/CustomerList";
+import OrderList from "./components/OrderList";
+
+class App extends React.Component {
+    render() {
+        return (
+            <div>
+                <CustomerList/>
+                <OrderList customerId={2}/>
+            </div>
+        );
+    }
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
