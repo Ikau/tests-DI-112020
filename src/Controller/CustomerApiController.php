@@ -10,6 +10,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
+ * Controller implementing API endpoint for entity 'Customer'.
+ *
+ * Current implemented routes:
+ * - GET /api/customers/: list of all existing customers
+ * - GET /api/customers/{customer_id}/orders/: list of all orders for the related customer
+ *
  * @Route("/api/customers", name="api_customers_")
  * @package App\Controller
  */
