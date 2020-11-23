@@ -1581,6 +1581,13 @@
   "resolved" "https://registry.yarnpkg.com/aws4/-/aws4-1.11.0.tgz"
   "version" "1.11.0"
 
+"axios@^0.21.0":
+  "integrity" "sha512-fmkJBknJKoZwem3/IKSSLpkdNXZeBu5Q7GA/aRsr2btgrptmSCxi2oFjZHqGdK9DoTil9PIHlPIZw2EcRJXRvw=="
+  "resolved" "https://registry.npmjs.org/axios/-/axios-0.21.0.tgz"
+  "version" "0.21.0"
+  dependencies:
+    "follow-redirects" "^1.10.0"
+
 "babel-cli@^6.26.0":
   "integrity" "sha1-UCq1SHTX24itALiHoGODzgPQAvE="
   "resolved" "https://registry.npmjs.org/babel-cli/-/babel-cli-6.26.0.tgz"
@@ -4290,7 +4297,7 @@
     "inherits" "^2.0.3"
     "readable-stream" "^2.3.6"
 
-"follow-redirects@^1.0.0":
+"follow-redirects@^1.0.0", "follow-redirects@^1.10.0":
   "integrity" "sha512-aq6gF1BEKje4a9i9+5jimNFIpq4Q1WiwBToeRK5NvZBd/TRsmW8BsJfOEGkr76TbOyPVD3OVDN910EcUNtRYEA=="
   "resolved" "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.0.tgz"
   "version" "1.13.0"
