@@ -42,6 +42,9 @@ php bin/phpunit
 ```
 ![Test suite example](doc/img/tests.png)
 
+Sometimes, a test or two can fail... I've tried to understand why but I guess the entitymanager has troubles with purging the test database (I know I should have tried to use mocks though)
+
+
 ### Launching the project
 First compile the React components `npm run dev` <br/>
 Now a localhost server `symfony server:start`<br/>
