@@ -6,13 +6,13 @@
 Install composer dependencies `composer install` <br/>
 You might be prompted to install `dama/doctrine-test-bundle`: say yes, we need this for phpunit
 
-[Prompt asking to install test bundle: type y](doc/img/install_test_bundle.png)
+![Prompt asking to install test bundle: type y](doc/img/install_test_bundle.png)
 
 Install frontend dependencies `npm install`
 
 ### Database
 
-A fil named `setup.sh` is present in the root folder. You can execute it after giving it privilege:
+A file named `setup.sh` is present in the root folder. You can execute it after giving it privilege:
 
 ```
 chmod +x setup.sh
@@ -27,7 +27,6 @@ Otherwise you need to reinstall it:
 ```
 composer remove symfony/phpunit-bridge
 composer require --dev symfony/phpunit-bridge
-php bin/phpunit
 ```
 And replace some files that were overwritten
 (see https://symfony.com/doc/4.4/testing/database.html#resetting-the-database-automatically-before-each-test
@@ -37,13 +36,17 @@ cp phpunit.xml.dist.bck phpunit.xml.dist
 cp .env.test.bck .env.test
 ```
 
-[Test suite example](doc/img/tests.png)
+Now you can execute the tests 
+```
+php bin/phpunit
+```
+![Test suite example](doc/img/tests.png)
 
 ### Launching the project
 First compile the React components `npm run dev` <br/>
 Now a localhost server `symfony server:start`<br/>
 
-[You should see this home page]()
+![You should see this home page](doc/img/homepage.png)
 
 ## Results
 
@@ -80,6 +83,6 @@ I did try using 'ReactRouter' but the doc was not maintained so I give up after 
 Even though I did not use TypeScript, I still tried to make components from what was asked. <br/>
 You should see a one page app (instead of 2 different pages):
 
-[At least I tried and learnt](doc/img/react_app.png)
+![At least I tried and learnt](doc/img/react_app.png)
 
 I added an input so that you can dynamically query a customer's order list based on their id.
