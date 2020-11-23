@@ -9,8 +9,16 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=OrderRepository::class)
  * @ORM\Table(name="`order`")
  */
-class Order
+class Order implements \EntitySerializationInterface
 {
+    const COLUMN_NAME_ID = 'purchase_identifier';
+    const COLUMN_NAME_CURRENCY = 'currency';
+    const COLUMN_NAME_CUSTOMER_ID = 'customer_id';
+    const COLUMN_NAME_DATE = 'date';
+    const COLUMN_NAME_PRICE = 'price';
+    const COLUMN_NAME_PRODUCT_ID = 'product_id';
+    const COLUMN_NAME_QUANTITY = 'quantity';
+
     /**
      * @ORM\Id
      * @ORM\Column(type="string", length=255)
@@ -53,11 +61,6 @@ class Order
      * @ORM\Column(type="date")
      */
     private $date;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getPurchaseIdentifier(): ?string
     {
@@ -141,5 +144,18 @@ class Order
         $this->date = $date;
 
         return $this;
+    }
+
+    public function toAssociativeArray(): array
+    {
+        return [
+            self::COLUMN_NAME_ID => $this->getPurchaseIdentifier(),
+            self::COLUMN_NAME_CURRENCY => $this->getCurrency(),
+            self::COLUMN_NAME_CUSTOMER_ID => $this->getCustomer()->getId(),
+            self::COLUMN_NAME_DATE => $this->getDate()->format('Y-m-d'),
+            self::COLUMN_NAME_PRICE => $this->getPrice(),
+            self::COLUMN_NAME_PRODUCT_ID => $this->getProductId(),
+            self::COLUMN_NAME_QUANTITY => $this->getQuantity()
+        ];
     }
 }

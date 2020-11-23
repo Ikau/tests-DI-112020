@@ -10,8 +10,16 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=CustomerRepository::class)
  */
-class Customer
+class Customer implements \EntitySerializationInterface
 {
+    const COLUMN_NAME_CITY = 'city';
+    const COLUMN_NAME_EMAIL = 'email';
+    const COLUMN_NAME_FIRST_NAME = 'firstname';
+    const COLUMN_NAME_ID = 'id';
+    const COLUMN_NAME_LAST_NAME = 'lastname';
+    const COLUMN_NAME_POSTAL_CODE = 'postal_code';
+    const COLUMN_NAME_TITLE = 'title';
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -151,7 +159,7 @@ class Customer
     /**
      * @return Collection|Order[]
      */
-    public function gerOrders(): Collection
+    public function getOrders(): Collection
     {
         return $this->orders;
     }
@@ -176,5 +184,31 @@ class Customer
         }
 
         return $this;
+    }
+
+    /**
+     * @return string Human readable title string.
+     */
+    public function getTitleName(): string
+    {
+        return $this->title === 1
+            ? 'mme'
+            : 'm';
+    }
+
+    /**
+     * @return array Associative array as [column_name => column_value, ...]
+     */
+    public function toAssociativeArray(): array
+    {
+        return [
+            Customer::COLUMN_NAME_ID => $this->getId(),
+            Customer::COLUMN_NAME_TITLE => $this->getTitleName(),
+            Customer::COLUMN_NAME_LAST_NAME => $this->getLastname() ?? '',
+            Customer::COLUMN_NAME_FIRST_NAME => $this->getFirstname() ?? '',
+            Customer::COLUMN_NAME_POSTAL_CODE => $this->getPostalCode() ?? '',
+            Customer::COLUMN_NAME_CITY => $this->getCity() ?? '',
+            Customer::COLUMN_NAME_EMAIL => $this->getEmail() ?? ''
+        ];
     }
 }

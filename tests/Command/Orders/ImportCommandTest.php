@@ -1,12 +1,20 @@
 <?php
 
+namespace App\Tests\Command\Orders;
+
 use App\Entity\Customer;
 use App\Entity\Order;
+use DateTime;
+use Doctrine\ORM\EntityManager;
+use Faker\Factory;
+use Faker\Generator;
+use ImportCommandException;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStreamFile;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class ImportCommandTest extends KernelTestCase
@@ -21,12 +29,12 @@ class ImportCommandTest extends KernelTestCase
     private $args;
 
     /**
-     * @var \Doctrine\ORM\EntityManager
+     * @var EntityManager
      */
     private $em;
 
     /**
-     * @var \Faker\Generator
+     * @var Generator
      */
     private $faker;
 
@@ -37,7 +45,7 @@ class ImportCommandTest extends KernelTestCase
 
     protected function setUp(): void
     {
-        $this->faker = \Faker\Factory::create();
+        $this->faker = Factory::create();
         $this->em = self::bootKernel()
             ->getContainer()
             ->get('doctrine')
@@ -112,14 +120,14 @@ class ImportCommandTest extends KernelTestCase
     {
         $numberLines = 1;
         $expectedCustomerId = $this->faker->numberBetween(2, 100);
-        $expectedCustomerGender = $this->faker->numberBetween(1, 2);
+        $expectedCustomerTitle = $this->faker->numberBetween(1, 2);
 
         $customersCsv = $this->getRandomCsvFile();
         $customersData = $this->getFakeCustomerData($numberLines);
         $customersCsv->setContent(
             $this->formatArrayToParsableData($customersData)
             // Adding a customer with NULL data
-            . "{$expectedCustomerId};{$expectedCustomerGender};\n"
+            . "{$expectedCustomerId};{$expectedCustomerTitle};\n"
         );
 
         $ordersCsv = $this->getRandomCsvFile();
@@ -136,7 +144,7 @@ class ImportCommandTest extends KernelTestCase
         $customer = $this->em->getRepository(Customer::class)
             ->findOneBy([
                 'id' => (int)$expectedCustomerId,
-                'title' => $expectedCustomerGender
+                'title' => $expectedCustomerTitle
             ]);
         $this->assertNotNull($customer);
     }
@@ -244,7 +252,7 @@ class ImportCommandTest extends KernelTestCase
 
     public function testExecuteFailMissingCustomersFilepath(): void
     {
-        $this->expectException(\Symfony\Component\Console\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
 
         $this->args = [];
         $this->executeCommand();
@@ -252,7 +260,7 @@ class ImportCommandTest extends KernelTestCase
 
     public function testExecuteFailMissingOrdersFilepath(): void
     {
-        $this->expectException(\Symfony\Component\Console\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
 
         $this->args = [
             self::ARG_CUSTOMERS_FILEPATH => $this->faker->word
