@@ -2,13 +2,13 @@
 
 namespace App\Tests\Command\Orders;
 
+use App\Command\Orders\ImportCommandException;
 use App\Entity\Customer;
 use App\Entity\Order;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Faker\Factory;
 use Faker\Generator;
-use ImportCommandException;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStreamFile;

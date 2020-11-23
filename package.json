@@ -1,9 +1,10 @@
 {
     "devDependencies": {
-        "@babel/preset-react": "^7.12.5",
+        "@babel/preset-react": "^7.12.7",
         "@symfony/webpack-encore": "^0.31.0",
         "bootstrap": "^4.5.3",
         "core-js": "^3.0.0",
+        "eslint": "^7.14.0",
         "jquery": "^3.5.1",
         "node-sass": "^5.0.0",
         "regenerator-runtime": "^0.13.2",
@@ -21,8 +22,17 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "@types/jest": "^26.0.15",
+        "@types/node": "^14.14.9",
+        "@types/react": "^17.0.0",
+        "@types/react-dom": "^17.0.0",
+        "axios": "^0.21.0",
+        "babel-cli": "^6.26.0",
+        "babel-preset-react-app": "^3.1.2",
         "prop-types": "^15.7.2",
         "react": "^17.0.1",
-        "react-dom": "^17.0.1"
+        "react-dom": "^17.0.1",
+        "react-router-dom": "^5.2.0",
+        "react-script": "^2.0.5"
     }
 }
